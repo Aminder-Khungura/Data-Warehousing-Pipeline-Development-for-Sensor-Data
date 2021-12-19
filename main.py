@@ -27,5 +27,5 @@ while True:
     time.sleep(10)
 
 # Add heart rate sensor, and detect when change is at risk
-# Add notifaction to phone app
-# Aim fan at user
+# Add notification to phone app
+# Aim fan at user9kj
