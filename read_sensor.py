@@ -16,8 +16,10 @@ def resting_heartRate(x):
 
 it = pyfirmata.util.Iterator(board)  # Assigns an iterator used to read the status of the inputs
 it.start()  # starts iterator, which keeps a loop running in parallel with your main code
+run = True
+loop_count = 0
 
-while True:
+while run:
     try:
         temp_sensor_value = temp_sensor.read()
         voltage = temp_sensor_value * 5
@@ -27,9 +29,15 @@ while True:
         heartRate = 0
     except TypeError:
         temperature = 0
+        heartRate = 0
 
     datetime_object = str(datetime.datetime.now().replace(second=0, microsecond=0))
     data = data.append({'Date': datetime_object, 'Temperature': temperature, 'Heart Rate': heartRate}, ignore_index=True)
+    if loop_count < 1000:
+        pass
+    else:
+        data.to_excel(r"C:\Users\amind\PycharmProjects\Data-Warehousing-Pipeline-Development-for-Sensor-Data\data.xlsx")
+        run = False
 
     time.sleep(60)
 
