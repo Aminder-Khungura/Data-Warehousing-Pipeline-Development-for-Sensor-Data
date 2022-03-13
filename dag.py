@@ -14,10 +14,11 @@ def convert_str(x):
 
 with DAG('Sensor_dag', start_date=datetime(2021, 1, 1), schedule_interval='@daily', catchup=False) as dag:
 
-    get_data = MySqlOperator(task_id='get_data_from_mysql', sql=r"""SELECT * FROM Sensor_DB;""", dag=dag)
-    MySqlToGoogleCloudStorageOperator(mysql_conn_id='connection_id', ensure_utc=False, *args, **kwargs)
+    Task_1 = MySqlOperator(task_id='get_data', sql=r"""SELECT * FROM Sensor_DB;""", dag=dag)
 
-    process_data = PythonOperator(
+    Task_2 = PythonOperator(
         task_id='Convert str to float',
         python_callable=convert_str()
     )
+
+    Task_3 = MySqlToGoogleCloudStorageOperator(mysql_conn_id='connection_id', ensure_utc=False, *args, **kwargs)
